@@ -1,0 +1,269 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .batchRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .batchNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .statusBadge {
+      background: rgba($color-text-white, 0.2);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+    }
+  }
+
+  .productName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.9;
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .titleIcon {
+      font-size: $font-size-xl;
+    }
+  }
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.metricItem {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  text-align: left;
+
+  .metricLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-xs;
+  }
+
+  .metricValue {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+
+    &.weight { color: $color-primary; }
+    &.time { color: $color-info; }
+    &.temp { color: $color-chart-temp; }
+    &.ratio { color: $color-success; }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.staffGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}
+
+.staffCard {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .avatar {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary-soft 0%, $color-primary 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-white;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-md;
+  }
+
+  .staffInfo {
+    flex: 1;
+
+    .staffRole {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      margin-bottom: 4rpx;
+    }
+
+    .staffName {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+    }
+  }
+}
+
+.timelineSection {
+  .stepItem {
+    display: flex;
+    gap: $spacing-md;
+    padding-bottom: $spacing-lg;
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 28rpx;
+      top: 72rpx;
+      bottom: 0;
+      width: 2rpx;
+      background: $color-divider;
+    }
+
+    .stepIcon {
+      width: 56rpx;
+      height: 56rpx;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-md;
+      flex-shrink: 0;
+      z-index: 1;
+
+      &.completed {
+        background: $color-success;
+        color: $color-text-white;
+      }
+
+      &.inProgress {
+        background: $color-primary;
+        color: $color-text-white;
+        box-shadow: 0 0 0 8rpx rgba($color-primary, 0.15);
+      }
+
+      &.pending {
+        background: $color-bg-hover;
+        color: $color-text-tertiary;
+      }
+    }
+
+    .stepContent {
+      flex: 1;
+      padding-top: $spacing-xs;
+
+      .stepTitle {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: 4rpx;
+      }
+
+      .stepDesc {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+        margin-bottom: $spacing-xs;
+      }
+
+      .stepTime {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+      }
+    }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-primary;
+      border: 1rpx solid $color-primary;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-primary, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

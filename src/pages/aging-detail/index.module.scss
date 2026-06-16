@@ -1,0 +1,365 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .batchRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .batchNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .levelBadge {
+      background: rgba(255, 215, 0, 0.35);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      color: #FFD700;
+    }
+  }
+
+  .productName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.95;
+    flex-wrap: wrap;
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+
+    .titleLeft { display: flex; align-items: center; gap: $spacing-sm; }
+    .titleIcon { font-size: $font-size-xl; }
+    .moreLink { font-size: $font-size-xs; color: $color-primary; font-weight: $font-weight-normal; }
+  }
+}
+
+.progressOverview {
+  display: flex;
+  gap: $spacing-lg;
+  align-items: center;
+  background: linear-gradient(135deg, rgba($color-primary, 0.05) 0%, rgba($color-warning, 0.08) 100%);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  .ringWrap {
+    width: 160rpx;
+    height: 160rpx;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .progressText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    .percent {
+      font-size: $font-size-xxl;
+      font-weight: $font-weight-bold;
+      color: $color-primary;
+    }
+
+    .label {
+      font-size: 20rpx;
+      color: $color-text-tertiary;
+    }
+  }
+
+  .progressInfo {
+    flex: 1;
+
+    .infoRow {
+      display: flex;
+      justify-content: space-between;
+      padding: $spacing-xs 0;
+      font-size: $font-size-sm;
+
+      .label {
+        color: $color-text-secondary;
+      }
+
+      .value {
+        color: $color-text-primary;
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
+}
+
+.qualityGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.qualityItem {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .qHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+
+    .qLabel {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+    }
+
+    .qBadge {
+      font-size: 20rpx;
+      padding: 2rpx 10rpx;
+      border-radius: $radius-button;
+
+      &.good { background: rgba($color-success, 0.15); color: $color-success; }
+      &.normal { background: rgba($color-info, 0.15); color: $color-info; }
+      &.excellent { background: rgba($color-warning, 0.2); color: #B8860B; }
+    }
+  }
+
+  .qValue {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin-bottom: 6rpx;
+  }
+
+  .qTarget {
+    font-size: 20rpx;
+    color: $color-text-tertiary;
+  }
+}
+
+.containerList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+}
+
+.containerCard {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6rpx;
+    background: linear-gradient(180deg, $color-primary 0%, $color-warning 100%);
+  }
+
+  .cName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+    margin-left: $spacing-sm;
+  }
+
+  .cDetails {
+    margin-left: $spacing-sm;
+
+    .cRow {
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+      padding: 2rpx 0;
+
+      span {
+        color: $color-text-primary;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+}
+
+.envRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  .envItem {
+    flex: 1;
+    background: $color-bg-page;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    text-align: center;
+
+    .eIcon {
+      font-size: $font-size-xxl;
+      margin-bottom: $spacing-xs;
+    }
+
+    .eValue {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $color-primary;
+    }
+
+    .eLabel {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      margin-top: 4rpx;
+    }
+
+    .eTarget {
+      font-size: 20rpx;
+      color: $color-text-tertiary;
+      margin-top: 2rpx;
+    }
+  }
+}
+
+.eventList {
+  .eventItem {
+    display: flex;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .eDate {
+      width: 120rpx;
+      flex-shrink: 0;
+      text-align: center;
+
+      .eDay {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-primary;
+      }
+
+      .eMonth {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+      }
+    }
+
+    .eContent {
+      flex: 1;
+
+      .eTitle {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: 4rpx;
+      }
+
+      .eDesc {
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+        line-height: 1.6;
+      }
+
+      .eMeta {
+        margin-top: $spacing-xs;
+        display: flex;
+        gap: $spacing-md;
+        font-size: 20rpx;
+        color: $color-text-tertiary;
+      }
+    }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+      text-align: right;
+    }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-primary;
+      border: 1rpx solid $color-primary;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, $color-primary 0%, #654321 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-primary, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

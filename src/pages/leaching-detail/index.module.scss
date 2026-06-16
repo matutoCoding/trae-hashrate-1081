@@ -1,0 +1,340 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, #4682B4 0%, #2F4F4F 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .batchRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .batchNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .statusBadge {
+      background: rgba($color-text-white, 0.25);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+    }
+  }
+
+  .productName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.95;
+    flex-wrap: wrap;
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+
+    .titleLeft { display: flex; align-items: center; gap: $spacing-sm; }
+    .titleIcon { font-size: $font-size-xl; }
+    .moreLink { font-size: $font-size-xs; color: $color-info; font-weight: $font-weight-normal; }
+  }
+}
+
+.outputStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.statBox {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-sm;
+  text-align: center;
+
+  .statValue {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: 6rpx;
+
+    &.volume { color: $color-info; }
+    &.acid { color: $color-chart-acid; }
+    &.ratio { color: $color-success; }
+  }
+
+  .statLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  .statSub {
+    font-size: 20rpx;
+    color: $color-text-tertiary;
+    margin-top: 4rpx;
+  }
+}
+
+.stageTabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-xs;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+.stageTab {
+  padding: $spacing-sm;
+  border-radius: $radius-sm;
+  text-align: center;
+  transition: all $transition-base;
+
+  .stageLabel {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    margin-bottom: 4rpx;
+  }
+
+  .stageValue {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &.active {
+    background: $color-bg-card;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+
+    .stageLabel { color: $color-info; }
+    .stageValue { color: $color-info; opacity: 0.8; }
+  }
+
+  &.done {
+    .stageLabel { color: $color-success; }
+    .stageValue::before { content: '✓ '; }
+  }
+}
+
+.stageDetail {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .stageTitle {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1rpx solid $color-divider;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .tag {
+      font-size: $font-size-xs;
+      padding: 4rpx 12rpx;
+      border-radius: $radius-button;
+      background: rgba($color-info, 0.12);
+      color: $color-info;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  .paramsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+
+  .paramItem {
+    .paramLabel {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      margin-bottom: 6rpx;
+    }
+
+    .paramValue {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+    }
+  }
+
+  .timelineMini {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $color-bg-card;
+    border-radius: $radius-sm;
+    padding: $spacing-sm $spacing-md;
+
+    .timePoint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .tDot {
+        width: 24rpx;
+        height: 24rpx;
+        border-radius: 50%;
+        background: $color-info;
+        margin-bottom: $spacing-xs;
+      }
+
+      .tLabel {
+        font-size: 20rpx;
+        color: $color-text-secondary;
+      }
+    }
+
+    .tLine {
+      flex: 1;
+      height: 4rpx;
+      background: $color-divider;
+      margin: 0 $spacing-xs 28rpx;
+    }
+
+    .timePoint.done .tDot { background: $color-success; }
+    .timePoint.doing .tDot { box-shadow: 0 0 0 6rpx rgba($color-info, 0.2); }
+    .timePoint.pending .tDot { background: $color-text-tertiary; opacity: 0.4; }
+  }
+}
+
+.flowDiagram {
+  background: linear-gradient(135deg, rgba($color-info, 0.08) 0%, rgba($color-chart-acid, 0.08) 100%);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .flowStep {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm 0;
+
+    &:not(:last-child)::after {
+      content: '↓';
+      position: absolute;
+    }
+
+    .fIcon {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+      background: $color-bg-card;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28rpx;
+      flex-shrink: 0;
+      box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+    }
+
+    .fContent {
+      flex: 1;
+
+      .fTitle {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: 4rpx;
+      }
+
+      .fDesc {
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+      }
+    }
+
+    .fArrow {
+      color: $color-text-tertiary;
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+      text-align: right;
+    }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-info;
+      border: 1rpx solid $color-info;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, #4682B4 0%, #2F4F4F 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba(70, 130, 180, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

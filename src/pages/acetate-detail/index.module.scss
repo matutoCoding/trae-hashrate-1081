@@ -1,0 +1,395 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, $color-primary 0%, $color-warning 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .batchRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .batchNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .statusBadge {
+      background: rgba($color-text-white, 0.25);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  .productName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.92;
+    flex-wrap: wrap;
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+
+    .titleLeft {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+
+    .titleIcon {
+      font-size: $font-size-xl;
+    }
+
+    .moreLink {
+      font-size: $font-size-xs;
+      color: $color-primary;
+      font-weight: $font-weight-normal;
+    }
+  }
+}
+
+.warningBanner {
+  background: linear-gradient(135deg, rgba($color-warning, 0.12) 0%, rgba($color-warning, 0.04) 100%);
+  border: 1rpx solid rgba($color-warning, 0.3);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+
+  .warnIcon {
+    font-size: $font-size-xxl;
+    flex-shrink: 0;
+  }
+
+  .warnContent {
+    flex: 1;
+
+    .warnTitle {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-warning;
+      margin-bottom: 4rpx;
+    }
+
+    .warnDesc {
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+      line-height: 1.6;
+    }
+  }
+}
+
+.coreMetrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+.metricBox {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-xs;
+  text-align: center;
+
+  .metricValue {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: 6rpx;
+
+    &.acid { color: $color-chart-acid; }
+    &.temp { color: $color-chart-temp; }
+    &.moisture { color: $color-info; }
+    &.day { color: $color-primary; }
+  }
+
+  .metricLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &.alert {
+    background: rgba($color-error, 0.08);
+    border: 1rpx solid rgba($color-error, 0.2);
+
+    .metricValue.temp { color: $color-error; }
+  }
+}
+
+.layerInfo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.layerCard {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  border-left: 6rpx solid $color-primary;
+
+  .layerName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  .layerMetrics {
+    display: flex;
+    justify-content: space-between;
+
+    .layerMetric {
+      text-align: center;
+
+      .mValue {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-primary;
+      }
+
+      .mLabel {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-top: 4rpx;
+      }
+    }
+  }
+
+  &.hot {
+    border-left-color: $color-error;
+
+    .layerMetrics .mValue { color: $color-error; }
+  }
+
+  &.middle {
+    border-left-color: $color-warning;
+
+    .layerMetrics .mValue { color: $color-warning; }
+  }
+
+  &.bottom {
+    border-left-color: $color-info;
+
+    .layerMetrics .mValue { color: $color-info; }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+      text-align: right;
+      max-width: 60%;
+    }
+  }
+}
+
+.recordList {
+  .recordHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .recordTime {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+    }
+
+    .recordTags {
+      display: flex;
+      gap: $spacing-xs;
+
+      .tag {
+        font-size: $font-size-xs;
+        padding: 4rpx 12rpx;
+        border-radius: $radius-button;
+
+        &.turn {
+          background: rgba($color-primary, 0.1);
+          color: $color-primary;
+        }
+
+        &.check {
+          background: rgba($color-info, 0.1);
+          color: $color-info;
+        }
+
+        &.warn {
+          background: rgba($color-warning, 0.15);
+          color: $color-warning;
+        }
+      }
+    }
+  }
+
+  .recordGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-xs;
+    margin-bottom: $spacing-sm;
+
+    .gridItem {
+      background: $color-bg-page;
+      border-radius: $radius-sm;
+      padding: $spacing-sm 0;
+      text-align: center;
+
+      .gridValue {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+      }
+
+      .gridLabel {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+      }
+    }
+  }
+
+  .recordItem {
+    background: $color-bg-page;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  .operatorRow {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    display: flex;
+    gap: $spacing-lg;
+  }
+}
+
+.strainCard {
+  background: linear-gradient(135deg, rgba($color-primary, 0.08) 0%, rgba($color-warning, 0.08) 100%);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  gap: $spacing-md;
+
+  .strainIcon {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: $radius-md;
+    background: $color-bg-card;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48rpx;
+    flex-shrink: 0;
+  }
+
+  .strainContent {
+    flex: 1;
+
+    .strainName {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+      margin-bottom: 4rpx;
+    }
+
+    .strainCode {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      margin-bottom: $spacing-sm;
+    }
+
+    .strainParams {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-xs;
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+    }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-primary;
+      border: 1rpx solid $color-primary;
+    }
+
+    &.warning {
+      background: linear-gradient(135deg, $color-warning 0%, #F4C430 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-warning, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

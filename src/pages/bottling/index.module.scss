@@ -1,0 +1,307 @@
+@use '@/styles/variables.scss' as *;
+
+.segmented {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xs;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+  gap: $spacing-xs;
+}
+
+.segItem {
+  flex: 1;
+  height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+
+  .icon { font-size: 28rpx; }
+
+  &.active {
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+    color: $color-text-white;
+    box-shadow: 0 4rpx 12rpx rgba($color-primary, 0.25);
+  }
+}
+
+.overviewCards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.overviewCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  position: relative;
+  overflow: hidden;
+
+  .iconBg {
+    position: absolute;
+    right: -20rpx;
+    top: -20rpx;
+    font-size: 120rpx;
+    opacity: 0.08;
+  }
+
+  .label {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-sm;
+  }
+
+  .value {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    line-height: 1.2;
+  }
+
+  .unit {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    margin-top: $spacing-xs;
+  }
+
+  .trend {
+    margin-top: $spacing-sm;
+    font-size: $font-size-xs;
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+
+    &.up { color: $color-success; }
+    &.down { color: $color-error; }
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionAction {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.listCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.99);
+    box-shadow: $shadow-card-hover;
+  }
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.cardTitle {
+  flex: 1;
+
+  .name {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
+
+    .icon { font-size: 32rpx; }
+    .text {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+    }
+  }
+
+  .subMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+  }
+}
+
+.levelBadge {
+  padding: 6rpx 20rpx;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+
+  &.l1 { background: rgba($color-primary, 0.1); color: $color-primary; }
+  &.l2 { background: rgba($color-info, 0.1); color: $color-info; }
+  &.l3 { background: rgba($color-success, 0.1); color: $color-success; }
+}
+
+.statusTag {
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+
+  &.inProgress { background: rgba($color-info, 0.1); color: $color-info; }
+  &.completed { background: rgba($color-success, 0.1); color: $color-success; }
+  &.warning { background: rgba($color-warning, 0.15); color: $color-warning; }
+  &.pending { background: rgba($color-text-tertiary, 0.1); color: $color-text-tertiary; }
+}
+
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+  border-top: 1rpx solid $color-divider;
+  padding-top: $spacing-md;
+}
+
+.dataItem {
+  text-align: center;
+
+  .dLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: 4rpx;
+  }
+  .dValue {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+}
+
+.agingCard {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.progressCircle {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+
+  .bgCircle {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 8rpx solid $color-bg-hover;
+  }
+
+  .percentText {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+  }
+}
+
+.agingInfo {
+  flex: 1;
+
+  .agingTitle {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+  }
+
+  .agingMeta {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    line-height: 1.6;
+  }
+}
+
+.qualityBadge {
+  position: absolute;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  padding: 6rpx 16rpx;
+  border-radius: $radius-xs;
+  background: rgba($color-warning, 0.15);
+  color: $color-warning;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+}
+
+.fillingStats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.statBox {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .sLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: 4rpx;
+  }
+  .sValue {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+  }
+  &.ok .sValue { color: $color-success; }
+  &.warn .sValue { color: $color-warning; }
+}
+
+.fixedFooter {
+  position: fixed;
+  bottom: 32rpx;
+  left: 32rpx;
+  right: 32rpx;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.primaryBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  box-shadow: 0 4rpx 16rpx rgba($color-primary, 0.3);
+
+  &:active { opacity: 0.9; transform: scale(0.98); }
+}

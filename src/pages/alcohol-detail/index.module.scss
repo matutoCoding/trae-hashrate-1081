@@ -1,0 +1,322 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, $color-success 0%, #3CB371 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .batchRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    .batchNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .statusBadge {
+      background: rgba($color-text-white, 0.2);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+    }
+  }
+
+  .productName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.9;
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+
+    .titleLeft {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+
+    .titleIcon {
+      font-size: $font-size-xl;
+    }
+
+    .moreLink {
+      font-size: $font-size-xs;
+      color: $color-primary;
+      font-weight: $font-weight-normal;
+    }
+  }
+}
+
+.coreMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.metricBox {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-sm;
+  text-align: center;
+
+  .metricValue {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: 4rpx;
+
+    &.alcohol { color: $color-success; }
+    &.sugar { color: $color-warning; }
+    &.temp { color: $color-chart-temp; }
+  }
+
+  .metricLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  .metricTrend {
+    font-size: 20rpx;
+    color: $color-success;
+    margin-top: 4rpx;
+
+    &.down { color: $color-error; }
+  }
+}
+
+.progressSection {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .progressHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-sm;
+
+    .label {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+    }
+
+    .value {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $color-success;
+    }
+  }
+
+  .progressBar {
+    height: 16rpx;
+    background: $color-bg-hover;
+    border-radius: 999rpx;
+    overflow: hidden;
+
+    .fill {
+      height: 100%;
+      border-radius: 999rpx;
+      background: linear-gradient(90deg, $color-success 0%, #3CB371 100%);
+    }
+  }
+
+  .progressMeta {
+    margin-top: $spacing-sm;
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+}
+
+.recordList {
+  .recordItem {
+    background: $color-bg-page;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .recordHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+
+      .recordTime {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+      }
+
+      .recordDay {
+        font-size: $font-size-xs;
+        background: rgba($color-success, 0.1);
+        color: $color-success;
+        padding: 4rpx 12rpx;
+        border-radius: $radius-button;
+      }
+    }
+
+    .recordGrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-sm;
+
+      .gridItem {
+        text-align: center;
+
+        .gridValue {
+          font-size: $font-size-md;
+          font-weight: $font-weight-semibold;
+          color: $color-text-primary;
+          margin-bottom: 4rpx;
+        }
+
+        .gridLabel {
+          font-size: $font-size-xs;
+          color: $color-text-tertiary;
+        }
+      }
+    }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.strainInfo {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  gap: $spacing-md;
+
+  .strainIcon {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, rgba($color-success, 0.15) 0%, rgba($color-success, 0.05) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48rpx;
+    flex-shrink: 0;
+  }
+
+  .strainContent {
+    flex: 1;
+
+    .strainName {
+      font-size: $font-size-md;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .strainCode {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      margin-bottom: $spacing-sm;
+    }
+
+    .strainParams {
+      display: flex;
+      gap: $spacing-lg;
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+
+      .paramItem {
+        display: flex;
+        align-items: center;
+        gap: 4rpx;
+      }
+    }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-success;
+      border: 1rpx solid $color-success;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, $color-success 0%, #3CB371 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-success, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

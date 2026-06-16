@@ -1,0 +1,374 @@
+@use '@/styles/variables.scss' as *;
+
+.headerBanner {
+  background: linear-gradient(135deg, $color-info 0%, #2C3E50 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding: $spacing-xl $page-padding;
+  color: $color-text-white;
+
+  .orderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-sm;
+
+    .orderNo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .statusBadge {
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      background: rgba($color-success, 0.6);
+
+      &.pending { background: rgba($color-warning, 0.6); }
+      &.paid { background: rgba($color-success, 0.6); }
+      &.shipped { background: rgba($color-info, 0.6); }
+      &.partial { background: rgba($color-error, 0.6); }
+    }
+  }
+
+  .customerName {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+
+  .metaRow {
+    display: flex;
+    gap: $spacing-lg;
+    font-size: $font-size-sm;
+    opacity: 0.95;
+    flex-wrap: wrap;
+  }
+}
+
+.amountBanner {
+  background: rgba($color-text-white, 0.15);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-top: $spacing-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .amountItem {
+    text-align: center;
+
+    .amountLabel {
+      font-size: 20rpx;
+      opacity: 0.9;
+      margin-bottom: 4rpx;
+    }
+
+    .amountValue {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+    }
+
+    &.received .amountValue { color: #90EE90; }
+    &.unpaid .amountValue { color: #FFD700; }
+  }
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+
+  .cardTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: space-between;
+
+    .titleLeft { display: flex; align-items: center; gap: $spacing-sm; }
+    .titleIcon { font-size: $font-size-xl; }
+    .moreLink { font-size: $font-size-xs; color: $color-info; font-weight: $font-weight-normal; }
+  }
+}
+
+.customerCard {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+
+  .cAvatar {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary-soft, $color-primary);
+    color: $color-text-white;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cInfo {
+    flex: 1;
+
+    .cName {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $color-text-primary;
+      margin-bottom: 4rpx;
+    }
+
+    .cLevel {
+      display: inline-block;
+      font-size: 20rpx;
+      padding: 2rpx 12rpx;
+      border-radius: $radius-button;
+      background: rgba($color-warning, 0.15);
+      color: $color-warning;
+      margin-bottom: $spacing-xs;
+    }
+
+    .cMeta {
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+      display: flex;
+      gap: $spacing-md;
+      flex-wrap: wrap;
+    }
+  }
+
+  .cActions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    .aBtn {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+      background: $color-bg-page;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.productList {
+  .pItem {
+    display: flex;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .pImg {
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: $radius-md;
+      background: linear-gradient(135deg, rgba($color-primary, 0.12), rgba($color-primary, 0.04));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56rpx;
+      flex-shrink: 0;
+    }
+
+    .pInfo {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .pName {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        line-height: 1.4;
+      }
+
+      .pSpec {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+      }
+
+      .pBottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .pPrice {
+          font-size: $font-size-md;
+          font-weight: $font-weight-bold;
+          color: $color-error;
+        }
+
+        .pQty {
+          font-size: $font-size-sm;
+          color: $color-text-secondary;
+          font-weight: $font-weight-medium;
+        }
+      }
+    }
+  }
+}
+
+.infoList {
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; }
+
+    .infoLabel {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+      flex-shrink: 0;
+    }
+
+    .infoValue {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+      text-align: right;
+      max-width: 65%;
+    }
+  }
+}
+
+.timelineList {
+  .tItem {
+    display: flex;
+    gap: $spacing-md;
+    padding-bottom: $spacing-lg;
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 23rpx;
+      top: 56rpx;
+      bottom: 0;
+      width: 2rpx;
+      background: $color-divider;
+    }
+
+    .tIcon {
+      width: 48rpx;
+      height: 48rpx;
+      border-radius: 50%;
+      background: $color-bg-hover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20rpx;
+      flex-shrink: 0;
+      z-index: 1;
+
+      &.done { background: $color-success; color: $color-text-white; }
+      &.doing { background: $color-info; color: $color-text-white; }
+    }
+
+    .tContent {
+      flex: 1;
+
+      .tTitle {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: 4rpx;
+      }
+
+      .tDesc {
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+        margin-bottom: 4rpx;
+      }
+
+      .tTime {
+        font-size: 20rpx;
+        color: $color-text-tertiary;
+      }
+    }
+  }
+}
+
+.paymentSummary {
+  background: linear-gradient(135deg, rgba($color-success, 0.08), rgba($color-info, 0.08));
+  border-radius: $radius-md;
+  padding: $spacing-md;
+
+  .summaryRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 8rpx 0;
+    font-size: $font-size-sm;
+
+    .sLabel { color: $color-text-secondary; }
+    .sValue { color: $color-text-primary; font-weight: $font-weight-medium; }
+    &.bold .sValue { font-weight: $font-weight-bold; font-size: $font-size-lg; color: $color-error; }
+    &.success .sValue { color: $color-success; font-weight: $font-weight-semibold; }
+    &.warning .sValue { color: $color-warning; font-weight: $font-weight-semibold; }
+  }
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+
+  .btn {
+    @include button-reset;
+    flex: 1;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+
+    &.outline {
+      background: $color-bg-page;
+      color: $color-info;
+      border: 1rpx solid $color-info;
+    }
+
+    &.secondary {
+      background: $color-bg-page;
+      color: $color-primary;
+      border: 1rpx solid $color-primary;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, $color-info 0%, #2C3E50 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-info, 0.3);
+    }
+
+    &.success {
+      background: linear-gradient(135deg, $color-success 0%, #228B22 100%);
+      color: $color-text-white;
+      box-shadow: 0 4rpx 16rpx rgba($color-success, 0.3);
+    }
+
+    &:active {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+}

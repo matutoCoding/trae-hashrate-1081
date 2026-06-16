@@ -1,0 +1,177 @@
+@use '@/styles/variables.scss' as *;
+
+.timeline {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.timelineTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.steps {
+  position: relative;
+  padding-left: 0;
+}
+
+.step {
+  display: flex;
+  gap: $spacing-md;
+  padding-bottom: $spacing-lg;
+  position: relative;
+
+  &:last-child {
+    padding-bottom: 0;
+
+    .stepLine { display: none; }
+  }
+}
+
+.stepLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64rpx;
+  flex-shrink: 0;
+}
+
+.stepIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  z-index: 2;
+  position: relative;
+  border: 4rpx solid $color-bg-card;
+  box-sizing: border-box;
+
+  &.active {
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+    color: $color-text-white;
+    box-shadow: 0 0 0 4rpx rgba($color-primary, 0.2);
+  }
+
+  &.completed {
+    background: $color-success;
+    color: $color-text-white;
+  }
+
+  &.pending {
+    background: $color-bg-hover;
+    color: $color-text-tertiary;
+  }
+
+  &.warning {
+    background: $color-warning;
+    color: $color-text-white;
+  }
+}
+
+.stepLine {
+  flex: 1;
+  width: 4rpx;
+  background: $color-border;
+  margin-top: $spacing-xs;
+
+  &.active {
+    background: linear-gradient(180deg, $color-primary 0%, $color-border 100%);
+  }
+
+  &.completed {
+    background: $color-success;
+  }
+}
+
+.stepContent {
+  flex: 1;
+  padding-top: $spacing-xs;
+}
+
+.stepHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xs;
+}
+
+.stepName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.stepStatus {
+  font-size: $font-size-xs;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  white-space: nowrap;
+
+  &.active {
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+  }
+
+  &.completed {
+    background: rgba($color-success, 0.1);
+    color: $color-success;
+  }
+
+  &.pending {
+    background: rgba($color-text-tertiary, 0.1);
+    color: $color-text-tertiary;
+  }
+
+  &.warning {
+    background: rgba($color-warning, 0.15);
+    color: $color-warning;
+  }
+}
+
+.stepDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.stepMeta {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.progressBar {
+  margin-top: $spacing-sm;
+  height: 12rpx;
+  background: $color-bg-hover;
+  border-radius: 999rpx;
+  overflow: hidden;
+
+  .progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, $color-primary 0%, $color-primary-light 100%);
+    border-radius: 999rpx;
+    transition: width $transition-slow ease-out;
+  }
+}
+
+.progressText {
+  margin-top: $spacing-xs;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

@@ -1,0 +1,16 @@
+@use '@/styles/variables.scss' as *;
+
+.batchTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  background: rgba($color-primary, 0.08);
+  color: $color-primary;
+}
+
+.batchText {
+  letter-spacing: 0.5rpx;
+}
