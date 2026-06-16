@@ -1,153 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { View, Text, ScrollView, Button } from '@tarojs/components';
-import Taro, { usePullDownRefresh } from '@tarojs/taro';
+import Taro, { useRouter, usePullDownRefresh } from '@tarojs/taro';
 import styles from './index.module.scss';
-import { formatDate, formatDateTime } from '@/utils/format';
+import { formatDate, formatDateTime, formatMoney } from '@/utils/format';
+import {
+  findBatchDetailById,
+  findBatchDetailByBatchNo,
+  BatchDetailInfo,
+  BatchStageItem
+} from '@/data/mockHome';
+
+const stageDetailMap: Record<string, string> = {
+  steaming: '/pages/steaming-detail/index',
+  alcohol: '/pages/alcohol-detail/index',
+  acetate: '/pages/acetate-detail/index',
+  turning: '/pages/turning-detail/index',
+  leaching: '/pages/leaching-detail/index',
+  aging: '/pages/aging-detail/index',
+  filling: '/pages/filling-detail/index'
+};
+
+const stageDescriptions = [
+  '高粱、麸皮蒸料润水，确保糊化度达标，冷却后入发酵池',
+  '接种SY-202酿酒酵母，控温糖化酒精发酵，酒精度≥6.5%',
+  '拌入成熟醋醅+沪酿1.01醋酸菌，分层入醅池，疏松度适中',
+  '每日定时翻醅倒醅，调节温度、氧气，上热中温下凉控制',
+  '成熟醋醅一淋、二淋、三淋套淋法取液，醋液色泽棕亮',
+  '新醋入宜兴紫砂陶缸，日晒夜露陈酿，酯化增香提色',
+  '硅藻土过滤+板框过滤+自然澄清7天，去除沉淀物',
+  '洗瓶→灌装→巴氏杀菌→旋盖封盖→贴标喷码→装箱入库',
+  '13项出厂质检（总酸、还原糖、菌落总数等），合格放行'
+];
 
 const BatchDetailPage: React.FC = () => {
-  const [batchInfo] = useState({
-    batchNo: 'C20241125-002',
-    productName: '山西老陈醋 · 金标',
-    status: '醋酸发酵阶段',
-    createTime: '2024-11-25 10:00:00',
-    productSpec: 'GB/T 19777 地理标志产品',
-    level: '一级'
+  const router = useRouter();
+  const id = router.params?.id || 'b1';
+  const batchNoParam = router.params?.batchNo;
+
+  const [detail, setDetail] = useState<BatchDetailInfo | null>(() => {
+    let found: BatchDetailInfo | undefined;
+    if (batchNoParam) found = findBatchDetailByBatchNo(batchNoParam);
+    if (!found) found = findBatchDetailById(id);
+    if (!found) found = findBatchDetailById('b1');
+    return found || null;
   });
 
-  const [progress] = useState({
-    percent: 48,
-    text: '进行中 (第5/9道工序)',
-    startDate: '2024-11-25',
-    expectEnd: '预计2025-02-15'
-  });
-
-  const [metrics] = useState([
-    { label: '预计周期', value: '82', unit: '天', type: 'time' },
-    { label: '生产成本', value: '3.28', unit: '万', type: 'cost' },
-    { label: '预计出成', value: '87.5', unit: '%', type: 'yield' }
-  ]);
-
-  const [stages] = useState([
-    {
-      icon: '🌾', name: '原料蒸料', status: 'done',
-      time: '11-25 10:00 - 15:00',
-      desc: '高粱500kg+麸皮150kg，润水4h，蒸料90min，糊化度88%',
-      tags: [{ text: '主操作：李师傅', type: '' }, { text: '查看详情', type: 'detailBtn', page: 'steaming' }]
-    },
-    {
-      icon: '🍶', name: '糖化酒精发酵', status: 'done',
-      time: '11-28 09:00 - 12-08 18:00',
-      desc: '酒精度7.2%，发酵10天，前3天每天翻拌2次',
-      tags: [{ text: '酒醅: 3,200kg', type: '' }, { text: '查看详情', type: 'detailBtn', page: 'alcohol' }]
-    },
-    {
-      icon: '🦠', name: '拌入醋酸菌种', status: 'done',
-      time: '12-09 08:00 - 11:30',
-      desc: '接种10%成熟醋醅，麸皮20%，谷壳疏松剂10%',
-      tags: [{ text: '菌种：沪酿1.01', type: '' }]
-    },
-    {
-      icon: '🔄', name: '翻醅倒醅管理', status: 'doing',
-      time: '12-10 至今',
-      desc: '已完成翻醅8次，倒醅2次，上层温度控制在38-42℃',
-      tags: [{ text: '异常:温度偏高', type: '' }, { text: '查看详情', type: 'detailBtn', page: 'turning' }]
-    },
-    {
-      icon: '🌡️', name: '醅温醅酸监测', status: 'doing',
-      time: '每日监测中',
-      desc: '总酸4.8g/100mL，平均醅温41.2℃，水分62%',
-      tags: [{ text: '当前醋酸发酵12天', type: '' }, { text: '查看详情', type: 'detailBtn', page: 'acetate' }]
-    },
-    {
-      icon: '⚗️', name: '套淋淋醋取液', status: 'pending',
-      time: '预计 12-15 开始',
-      desc: '一淋二淋三淋套淋法，预计出醋2,800L',
-      tags: [{ text: '待开始', type: '' }]
-    },
-    {
-      icon: '🏺', name: '新醋陈酿晒露', status: 'pending',
-      time: '预计 12-18 开始',
-      desc: '宜兴紫砂陶缸陈酿，目标一年期',
-      tags: [{ text: '陈酿期1年', type: '' }]
-    },
-    {
-      icon: '🧪', name: '过滤澄清灌装', status: 'pending',
-      time: '预计 2025-12 进行',
-      desc: '硅藻土过滤+自然澄清+巴氏杀菌',
-      tags: [{ text: '待开始', type: '' }]
-    },
-    {
-      icon: '📦', name: '包装入库销售', status: 'pending',
-      time: '待定',
-      desc: '500mL×12瓶/箱，喷码追溯入库',
-      tags: [{ text: '待开始', type: '' }]
-    }
-  ]);
-
-  const [infoCards] = useState([
-    {
-      title: '📋 原料配置',
-      rows: [
-        { label: '主料高粱', value: '500 kg' },
-        { label: '辅料麸皮', value: '150 kg' },
-        { label: '谷壳疏松', value: '50 kg' },
-        { label: '合计粮醅', value: '4,000 kg' }
-      ]
-    },
-    {
-      title: '👷 团队人员',
-      custom: true
-    },
-    {
-      title: '💰 成本预估',
-      rows: [
-        { label: '原料成本', value: '¥ 15,600' },
-        { label: '人工成本', value: '¥ 8,400' },
-        { label: '能耗包装', value: '¥ 6,200' },
-        { label: '管理摊销', value: '¥ 2,600' }
-      ]
-    },
-    {
-      title: '📊 质量目标',
-      rows: [
-        { label: '总酸含量', value: '≥ 5.0%' },
-        { label: '氨基酸氮', value: '≥ 0.25%' },
-        { label: '成品等级', value: '一级品以上' },
-        { label: '合格率', value: '≥ 98%' }
-      ]
-    }
-  ]);
-
-  const [team] = useState([
-    { name: '李', role: '制醅组组长' },
-    { name: '王', role: '发酵操作工' },
-    { name: '张', role: '翻醅操作工' },
-    { name: '赵', role: '陈酿管理员' },
-    { name: '刘', role: '质检员' }
-  ]);
+  useEffect(() => {
+    if (!detail) Taro.showToast({ title: '批次不存在', icon: 'none' });
+  }, [detail]);
 
   usePullDownRefresh(() => {
     setTimeout(() => {
       Taro.stopPullDownRefresh();
       Taro.showToast({ title: '刷新成功', icon: 'success' });
-    }, 1000);
+    }, 800);
   });
 
-  const handleStageClick = (page?: string) => {
-    if (!page) return;
-    const routeMap: Record<string, string> = {
-      steaming: '/pages/steaming-detail/index',
-      alcohol: '/pages/alcohol-detail/index',
-      acetate: '/pages/acetate-detail/index',
-      turning: '/pages/turning-detail/index',
-      leaching: '/pages/leaching-detail/index'
-    };
-    const route = routeMap[page];
-    if (route) Taro.navigateTo({ url: route });
+  const createEndDate = useMemo(() => {
+    if (!detail) return '';
+    const d = new Date(detail.createTime.replace(/-/g, '/'));
+    d.setDate(d.getDate() + detail.cycleDays);
+    return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+  }, [detail]);
+
+  const handleStageClick = (stage: BatchStageItem) => {
+    if (!detail) return;
+    if (stage.status === 'pending') {
+      Taro.showToast({ title: `${stage.name} 尚未开始`, icon: 'none' });
+      return;
+    }
+    const route = stageDetailMap[stage.key];
+    if (route) {
+      Taro.navigateTo({ url: `${route}?batchId=${detail.id}&batchNo=${detail.batchNo}` });
+    } else {
+      Taro.showToast({ title: `${stage.name} 详情即将上线`, icon: 'none' });
+    }
   };
 
   const handleReport = () => {
-    Taro.showToast({ title: '生成批次报告', icon: 'none' });
+    Taro.showToast({ title: `生成 ${detail?.batchNo} 批次报告`, icon: 'none' });
   };
 
   const handleAction = () => {
@@ -159,37 +90,80 @@ const BatchDetailPage: React.FC = () => {
     });
   };
 
+  if (!detail) {
+    return (
+      <View className="pageContainer" style={{ padding: 40, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>加载中...</Text>
+      </View>
+    );
+  }
+
+  const headerColorMap: Record<string, string> = {
+    completed: 'linear-gradient(135deg, #2E8B57 0%, #3CB371 100%)',
+    warning: 'linear-gradient(135deg, #CD5C5C 0%, #E07A5F 100%)',
+    pending: 'linear-gradient(135deg, #696969 0%, #808080 100%)'
+  };
+  const headerBg = headerColorMap[detail.statusType] || 'linear-gradient(135deg, #8B4513 0%, #A0522D 100%)';
+
+  const statusBadgeClass =
+    detail.statusType === 'completed' ? styles.completedBadge :
+    detail.statusType === 'warning' ? styles.warningBadge : styles.progressBadge;
+
   return (
     <View className="pageContainer">
       <ScrollView scrollY style={{ height: '100vh' }}>
-        <View className={styles.headerBanner}>
+        <View className={styles.headerBanner} style={{ background: headerBg }}>
           <View className={styles.batchRow}>
-            <Text className={styles.batchNo}>批次号 {batchInfo.batchNo}</Text>
-            <View className={styles.statusBadge}>
-              <Text>{batchInfo.status}</Text>
+            <Text className={styles.batchNo}>批次号 {detail.batchNo}</Text>
+            <View className={`${styles.statusBadge} ${statusBadgeClass}`}>
+              <Text>{detail.status}</Text>
             </View>
           </View>
-          <Text className={styles.productName}>{batchInfo.productName}</Text>
+          <Text className={styles.productName}>{detail.productName} · {detail.grade}</Text>
           <View className={styles.metaRow}>
-            <Text>📋 {batchInfo.productSpec}</Text>
-            <Text>⭐ {batchInfo.level}</Text>
-            <Text>📅 创建：{formatDate(batchInfo.createTime)}</Text>
+            <Text>📦 {detail.productSpec}</Text>
+            <Text>🏷️ {detail.grade}</Text>
+            <Text>📅 创建：{formatDate(detail.createTime)}</Text>
           </View>
 
           <View className={styles.progressSection}>
             <View className={styles.progressHeader}>
               <Text className={styles.label}>总体进度</Text>
-              <Text className={styles.value}>{progress.percent}% · {progress.text}</Text>
+              <Text className={styles.value}>
+                {detail.progress}% · {detail.progress === 100 ? '全部工序已完成' : `进行中（第${detail.currentStageIndex + 1}/${detail.stages.length}道工序：${detail.currentStage}）`}
+              </Text>
             </View>
             <View className={styles.progressBar}>
-              <View className={styles.fill} style={{ width: `${progress.percent}%` }} />
+              <View className={styles.fill} style={{ width: `${detail.progress}%` }} />
             </View>
             <View className={styles.progressLabels}>
-              <Text>开始 {progress.startDate}</Text>
-              <Text>预计完成 {progress.expectEnd}</Text>
+              <Text>开始 {formatDate(detail.createTime)}</Text>
+              <Text>预计完成 {createEndDate}</Text>
             </View>
           </View>
         </View>
+
+        {detail.alerts && detail.alerts.length > 0 && (
+          <View style={{ padding: '24rpx 32rpx 0' }}>
+            {detail.alerts.map((a, i) => (
+              <View key={i} style={{
+                padding: '20rpx 24rpx',
+                marginBottom: 16,
+                borderRadius: 12,
+                background: a.type === 'warning' ? 'rgba(205,92,92,0.08)' : 'rgba(61,90,128,0.08)',
+                borderLeft: `6rpx solid ${a.type === 'warning' ? '#CD5C5C' : '#3D5A80'}`
+              }}>
+                <View style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <Text style={{ fontSize: 26, fontWeight: 700, color: a.type === 'warning' ? '#CD5C5C' : '#3D5A80' }}>
+                    {a.type === 'warning' ? '⚠️ ' : '💡 '}{a.title}
+                  </Text>
+                  <Text style={{ fontSize: 20, color: '#888' }}>{a.time}</Text>
+                </View>
+                <Text style={{ fontSize: 24, color: '#555', lineHeight: '1.6' }}>{a.content}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         <View className={styles.sectionCard}>
           <View className={styles.cardTitle}>
@@ -199,10 +173,10 @@ const BatchDetailPage: React.FC = () => {
             </View>
           </View>
           <View className={styles.coreMetrics}>
-            {metrics.map((item, idx) => (
+            {detail.metrics.map((item, idx) => (
               <View key={idx} className={styles.metricBox}>
-                <Text className={`${styles.mValue} ${styles[item.type]}`}>
-                  {item.value}{item.unit}
+                <Text className={styles.mValue} style={{ color: item.color }}>
+                  {item.value}
                 </Text>
                 <Text className={styles.mLabel}>{item.label}</Text>
               </View>
@@ -214,32 +188,47 @@ const BatchDetailPage: React.FC = () => {
           <View className={styles.cardTitle}>
             <View className={styles.titleLeft}>
               <Text className={styles.titleIcon}>🔀</Text>
-              <Text>工艺流程进度 (9道工序)</Text>
+              <Text>工艺流程进度 ({detail.stages.length}道工序)</Text>
             </View>
             <Text className={styles.moreLink}>流程图</Text>
           </View>
           <View className={styles.processTimeline}>
-            {stages.map((stage, idx) => (
-              <View key={idx} className={styles.stageItem}>
+            {detail.stages.map((stage, idx) => (
+              <View key={idx} className={styles.stageItem} onClick={() => handleStageClick(stage)}>
                 <View className={`${styles.stageIcon} ${styles[stage.status]}`}>
                   <Text>{stage.icon}</Text>
                 </View>
                 <View className={styles.stageContent}>
                   <View className={styles.stageHeader}>
-                    <Text className={styles.stageName}>{idx + 1}. {stage.name}</Text>
-                    <Text className={styles.stageTime}>{stage.time}</Text>
+                    <Text className={styles.stageName}>
+                      {idx + 1}. {stage.name}
+                      {stage.status === 'doing' && (
+                        <Text style={{ marginLeft: 12, fontSize: 20, padding: '2rpx 12rpx', background: '#DAA520', color: '#fff', borderRadius: 6 }}>
+                          当前工序
+                        </Text>
+                      )}
+                    </Text>
+                    <Text className={styles.stageTime}>
+                      {stage.date || '待开始'}
+                    </Text>
                   </View>
-                  <Text className={styles.stageDesc}>{stage.desc}</Text>
+                  <Text className={styles.stageDesc}>
+                    {stageDescriptions[idx]}
+                  </Text>
                   <View className={styles.stageTags}>
-                    {stage.tags.map((tag, tIdx) => (
-                      <Text
-                        key={tIdx}
-                        className={`${styles.tag} ${tag.type === 'detailBtn' ? styles.detailBtn : ''}`}
-                        onClick={() => handleStageClick(tag.page)}
-                      >
-                        {tag.text}
+                    <Text className={`${styles.tag} ${stage.status === 'done' ? styles.doneTag : stage.status === 'doing' ? styles.doingTag : styles.pendingTag}`}>
+                      {stage.status === 'done' ? '✅ 已完成' : stage.status === 'doing' ? '⏳ 执行中' : '⏸️ 待开始'}
+                    </Text>
+                    {stage.detailRoute && stage.status !== 'pending' && (
+                      <Text className={`${styles.tag} ${styles.detailBtn}`}>
+                        🔍 查看详情 →
                       </Text>
-                    ))}
+                    )}
+                    {stage.remark && (
+                      <Text className={styles.tag} style={{ color: '#666' }}>
+                        {stage.remark}
+                      </Text>
+                    )}
                   </View>
                 </View>
               </View>
@@ -255,32 +244,104 @@ const BatchDetailPage: React.FC = () => {
             </View>
           </View>
           <View className={styles.infoGrid}>
-            {infoCards.map((card, idx) => (
-              <View key={idx} className={styles.infoCard}>
-                <Text className={styles.infoTitle}>{card.title}</Text>
-                {card.custom ? (
+            <View className={styles.infoCard}>
+              <Text className={styles.infoTitle}>🌾 原料配置</Text>
+              {detail.rawMaterials.map((r, i) => (
+                <View key={i} className={styles.infoRow}>
+                  <Text className={styles.label}>{r.name}</Text>
+                  <Text className={styles.value}>{r.qty} <Text style={{ fontSize: 20, color: '#999' }}> · {r.origin}</Text></Text>
+                </View>
+              ))}
+            </View>
+
+            <View className={styles.infoCard}>
+              <Text className={styles.infoTitle}>👷 团队人员</Text>
+              <View>
+                <View style={{
+                  display: 'flex', alignItems: 'center',
+                  padding: '16rpx 20rpx', background: '#FFF8F0',
+                  borderRadius: 10, border: '1rpx solid #E8C898', marginBottom: 12
+                }}>
+                  <Text style={{
+                    width: 60, height: 60, borderRadius: 30,
+                    background: '#8B4513', color: '#fff',
+                    fontWeight: 700, fontSize: 28, textAlign: 'center',
+                    lineHeight: '60rpx', marginRight: 16
+                  }}>{detail.team.master.charAt(0)}</Text>
                   <View>
-                    <View className={styles.staffAvatars}>
-                      {team.map((p, pIdx) => (
-                        <View key={pIdx} className={styles.aItem}>
-                          <Text>{p.name}</Text>
-                        </View>
-                      ))}
-                    </View>
-                    <View style={{ marginTop: '16rpx', fontSize: '22rpx', color: '#9B7B6B' }}>
-                      共 {team.length} 人 · 点击查看
-                    </View>
+                    <Text style={{ fontSize: 26, fontWeight: 700, color: '#8B4513' }}>{detail.team.master}</Text>
+                    <Text style={{ fontSize: 22, color: '#999' }}>制醋班组 · 组长/总负责</Text>
                   </View>
-                ) : (
-                  card.rows?.map((row, rIdx) => (
-                    <View key={rIdx} className={styles.infoRow}>
-                      <Text className={styles.label}>{row.label}</Text>
-                      <Text className={styles.value}>{row.value}</Text>
+                </View>
+                <View className={styles.staffAvatars}>
+                  {detail.team.assistants.map((p, pIdx) => (
+                    <View key={pIdx} className={styles.aItem}>
+                      <Text>{p.charAt(0)}</Text>
                     </View>
-                  ))
-                )}
+                  ))}
+                </View>
+                <View style={{ marginTop: 12, fontSize: 22, color: '#9B7B6B' }}>
+                  共 {detail.team.total} 人 · {detail.team.assistants.join('、')}
+                </View>
               </View>
-            ))}
+            </View>
+
+            <View className={styles.infoCard}>
+              <Text className={styles.infoTitle}>💰 成本明细</Text>
+              {detail.costItems.map((c, i) => (
+                <View key={i} className={styles.infoRow}>
+                  <Text className={styles.label}>{c.label}</Text>
+                  <Text className={styles.value} style={{
+                    fontWeight: c.label.includes('总成本') ? 700 : 400,
+                    color: c.label.includes('总成本') ? '#8B4513' : '#333'
+                  }}>{c.value}</Text>
+                </View>
+              ))}
+            </View>
+
+            <View className={styles.infoCard}>
+              <Text className={styles.infoTitle}>📊 质量目标</Text>
+              {detail.qualityItems.map((q, i) => (
+                <View key={i} className={styles.infoRow}>
+                  <Text className={styles.label}>{q.label}</Text>
+                  <Text className={styles.value} style={{
+                    fontWeight: q.value.includes('✅') ? 700 : 400,
+                    color: q.value.includes('✅') ? '#2E8B57' : '#333'
+                  }}>{q.value}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </View>
+
+        <View className={styles.sectionCard}>
+          <View className={styles.cardTitle}>
+            <View className={styles.titleLeft}>
+              <Text className={styles.titleIcon}>📋</Text>
+              <Text>批次信息汇总</Text>
+            </View>
+          </View>
+          <View style={{ padding: 8 }}>
+            <View className={styles.infoRow}>
+              <Text className={styles.label}>批次号</Text>
+              <Text className={styles.value} style={{ fontWeight: 700, color: '#8B4513', letterSpacing: 1 }}>{detail.batchNo}</Text>
+            </View>
+            <View className={styles.infoRow}>
+              <Text className={styles.label}>产品名称</Text>
+              <Text className={styles.value}>{detail.productName} / {detail.productSpec}</Text>
+            </View>
+            <View className={styles.infoRow}>
+              <Text className={styles.label}>创建时间</Text>
+              <Text className={styles.value}>{formatDateTime(detail.createTime)}</Text>
+            </View>
+            <View className={styles.infoRow}>
+              <Text className={styles.label}>班组负责</Text>
+              <Text className={styles.value}>{detail.team.master}（{detail.team.total}人）</Text>
+            </View>
+            <View className={styles.infoRow}>
+              <Text className={styles.label}>质量目标说明</Text>
+              <Text className={styles.value}>{detail.qualityTarget}</Text>
+            </View>
           </View>
         </View>
 
@@ -292,7 +353,7 @@ const BatchDetailPage: React.FC = () => {
           📄 批次报告
         </Button>
         <Button className={`${styles.btn} ${styles.primary}`} onClick={handleAction}>
-          批次操作
+          ⚙️ 批次操作
         </Button>
       </View>
     </View>

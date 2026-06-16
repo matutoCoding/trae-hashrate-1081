@@ -23,6 +23,29 @@
       border-radius: $radius-button;
       font-size: $font-size-xs;
     }
+
+    .completedBadge {
+      background: rgba($color-success, 0.85);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+    }
+    .warningBadge {
+      background: rgba($color-error, 0.9);
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+    }
+    .progressBadge {
+      background: rgba($color-warning, 0.9);
+      color: $color-text-white;
+      padding: 6rpx 20rpx;
+      border-radius: $radius-button;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+    }
   }
 
   .productName {
@@ -215,6 +238,22 @@
           &.detailBtn {
             color: $color-primary;
             background: rgba($color-primary, 0.08);
+            font-weight: $font-weight-semibold;
+            cursor: pointer;
+          }
+          &.doneTag {
+            color: $color-success;
+            background: rgba($color-success, 0.1);
+            font-weight: $font-weight-medium;
+          }
+          &.doingTag {
+            color: $color-warning;
+            background: rgba($color-warning, 0.12);
+            font-weight: $font-weight-semibold;
+          }
+          &.pendingTag {
+            color: $color-text-tertiary;
+            background: rgba($color-text-tertiary, 0.08);
           }
         }
       }

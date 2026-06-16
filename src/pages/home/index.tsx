@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
 
   const handleBatchClick = (batchId: string) => {
     console.log('[Home] Click batch:', batchId);
-    Taro.navigateTo({ url: '/pages/batch-detail/index' });
+    Taro.navigateTo({ url: `/pages/batch-detail/index?id=${batchId}` });
   };
 
   const handleAddBatch = () => {

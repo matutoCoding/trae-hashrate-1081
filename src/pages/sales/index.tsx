@@ -40,7 +40,7 @@ const SalesPage: React.FC = () => {
 
   const handleOrderClick = (id: string) => {
     console.log('[Sales] Click order:', id);
-    Taro.navigateTo({ url: '/pages/sale-detail/index' });
+    Taro.navigateTo({ url: `/pages/sale-detail/index?id=${id}` });
   };
 
   const handleNewOrder = () => {
